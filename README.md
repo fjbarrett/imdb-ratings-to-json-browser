@@ -10,4 +10,4 @@ The purpose of this tool is to create a consolidated list of user ratings and ma
 
 Project is available to use online.
 
-[https://imdb-ratings-to-json-browser.vercel.app](https://imdb-ratings-to-json-browser.vercel.app)
+[imdb-ratings-to-json-browser.vercel.app](https://imdb-ratings-to-json-browser.vercel.app)
