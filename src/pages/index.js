@@ -1,12 +1,10 @@
-"use client";
 import { useState } from "react";
 import Papa from "papaparse";
-import Layout from "../components/Layout";
 
 const Home = () => {
   const [file, setFile] = useState(null);
   const [jsonData, setJsonData] = useState(null);
-  const [copySuccess, setCopySuccess] = useState("");
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const onFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -31,52 +29,47 @@ const Home = () => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(JSON.stringify(jsonData, null, 2));
-    setCopySuccess("Copied!");
+    setCopySuccess(true);
   };
 
   return (
-    <Layout>
-      <div className="flex flex-col items-center justify-center min-h-screen py-2">
-        <div className="rounded p-5 shadow-md">
-          <h1 className="text-2xl font-bold mb-5">IMDB Ratings Converter</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 py-2">
+      <div className="bg-gray-800 text-white rounded p-5 shadow-md">
+        <h1 className="text-2xl font-bold mb-5">IMDB Ratings Converter</h1>
 
-          <form onSubmit={onFormSubmit} className="space-y-3">
-            <label className="block text-sm font-medium text-white">
-              Upload a CSV file:
-              <input
-                type="file"
-                accept=".csv"
-                onChange={onFileChange}
-                className="mt-1 block w-full"
-              />
-            </label>
+        <form onSubmit={onFormSubmit} className="space-y-3">
+          <label className="block text-sm font-medium">
+            Upload a CSV file:
+            <input
+              type="file"
+              accept=".csv"
+              onChange={onFileChange}
+              className="mt-1 block w-full"
+            />
+          </label>
+          <button
+            type="submit"
+            className="px-3 py-2 bg-blue-600 text-white rounded"
+          >
+            Submit
+          </button>
+        </form>
+
+        {jsonData && (
+          <div className="mt-5 space-y-3 relative">
             <button
-              type="submit"
-              className="px-3 py-2 bg-blue-600 text-white rounded"
+              onClick={copyToClipboard}
+              className="px-3 py-2 bg-green-500 text-white rounded absolute top-2 right-2"
             >
-              Submit
+              {copySuccess ? "Copied!" : "Copy"}
             </button>
-          </form>
-
-          {jsonData && (
-            <div className="mt-5 space-y-3">
-              <pre className="border rounded p-3 bg-gray-800 font-mono text-sm">
-                <code>{JSON.stringify(jsonData, null, 2)}</code>
-              </pre>
-              <button
-                onClick={copyToClipboard}
-                className="px-3 py-2 bg-green-500 text-white rounded"
-              >
-                Copy
-              </button>
-              {copySuccess && (
-                <span className="text-green-500">{copySuccess}</span>
-              )}
-            </div>
-          )}
-        </div>
+            <pre className="border rounded p-3 bg-gray-800 font-mono text-sm">
+              <code>{JSON.stringify(jsonData, null, 2)}</code>
+            </pre>
+          </div>
+        )}
       </div>
-    </Layout>
+    </div>
   );
 };
 
