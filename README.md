@@ -1,6 +1,6 @@
 ## IMDb CSV Ratings to JSON in the browser
 
-This is a NextJS implementation of this simple python [script](https://github.com/fjbarrett/imdb-ratings-to-json) designed to strip down the IMDb ratings available as an exported .csv file from an imdb.com user account.
+This is a NextJS implementation of a simple python [script](https://github.com/fjbarrett/imdb-ratings-to-json) designed to strip down the IMDb ratings available as an exported .csv file from an imdb.com user account.
 
 ## Purpose
 
