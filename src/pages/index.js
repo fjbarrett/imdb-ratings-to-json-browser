@@ -34,7 +34,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 py-2">
-      <div className="bg-gray-800 text-white rounded p-5 shadow-md">
+      <div className="bg-gray-800 text-white rounded p-5">
         <h1 className="text-2xl font-bold mb-5">IMDB Ratings Converter</h1>
 
         <form onSubmit={onFormSubmit} className="space-y-3">
