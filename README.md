@@ -5,3 +5,9 @@ This is a NextJS implementation of the simple python [script](https://github.com
 ## Purpose
 
 The purpose of this tool is to create a consolidated list of user ratings and make them portable to chat.openai.com. Currently, copying and pasting the entire .csv from IMDb is not possible with a substantial amount of ratings.
+
+## Live view
+
+Project is available to use online.
+
+[https://imdb-ratings-to-json-browser.vercel.app](https://imdb-ratings-to-json-browser.vercel.app)
