@@ -1,12 +1,20 @@
+// Using React Hooks to manage state
 import { useState } from "react";
+// Import papaparse to parse csv file
 import Papa from "papaparse";
 
+// Home page component
 const Home = () => {
+  // State to store uploaded file
   const [file, setFile] = useState(null);
+  // State to store converted json data
   const [jsonData, setJsonData] = useState(null);
+  // State to store copy success message
   const [copySuccess, setCopySuccess] = useState(false);
 
+  // Function to handle file upload event
   const onFileChange = (event) => {
+    // Update the state on file change
     setFile(event.target.files[0]);
   };
 
@@ -35,7 +43,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 py-2">
       <div className="bg-gray-800 text-white rounded p-5">
-        <h1 className="text-2xl font-bold mb-5">IMDB Ratings Converter</h1>
+        <h1 className="text-2xl font-bold mb-5">IMDb Ratings Converter</h1>
 
         <form onSubmit={onFormSubmit} className="space-y-3">
           <label className="block text-sm font-medium">
