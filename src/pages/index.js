@@ -32,14 +32,9 @@ const Home = () => {
       header: true,
       complete: function (results) {
         // Check if the CSV file contains the required columns
-        if (
-          !results.meta.fields.includes("Title") ||
-          !results.meta.fields.includes("Your Rating")
-        ) {
+        if (!results.meta.fields.includes("Title") || !results.meta.fields.includes("Your Rating")) {
           // Set error message if the required columns are missing
-          setErrorMessage(
-            "The uploaded CSV file is not from IMDb or is in an improper format. Please make sure the file contains 'Title' and 'Your Rating' columns."
-          );
+          setErrorMessage("The uploaded CSV file is not from IMDb or is in an improper format. Please make sure the file contains 'Title' and 'Your Rating' columns.");
           return;
         }
 
@@ -64,7 +59,7 @@ const Home = () => {
   // Render the Home component
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 py-2">
-      <div className="bg-gray-800 text-white rounded p-5">
+      <div className="bg-gray-800 text-white rounded p-5" style={{ maxWidth: "800px" }}>
         <h1 className="text-2xl font-bold mb-5">IMDb Ratings Converter</h1>
 
         <form onSubmit={onFormSubmit} className="space-y-3">
@@ -92,17 +87,15 @@ const Home = () => {
 
         {/* Display the converted JSON data */}
         {jsonData && (
-          <div className="mt-5">
-            <h2 className="text-lg font-bold mb-3">Converted Data:</h2>
-            <pre>{JSON.stringify(jsonData, null, 2)}</pre>
-
-            {/* Button to copy the JSON data to clipboard */}
+          <div className="mt-5 relative">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute top-0 right-0 mt-3 mr-3"
               onClick={copyToClipboard}
             >
               {copySuccess ? "Copied!" : "Copy to Clipboard"}
             </button>
+            <h2 className="text-lg font-bold mb-3">Converted Data:</h2>
+            <code className="bg-gray-900 text-white rounded p-5 block">{JSON.stringify(jsonData, null, 2)}</code>
           </div>
         )}
       </div>
