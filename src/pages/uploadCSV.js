@@ -9,6 +9,7 @@ import Papa from "papaparse";
 const Home = () => {
   // State to store uploaded file
   const [file, setFile] = useState(null);
+  console.log(session);
   // State to store converted json data
   const [jsonData, setJsonData] = useState(null);
   // State to store copy success message
