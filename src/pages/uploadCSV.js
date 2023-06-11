@@ -4,45 +4,6 @@ import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import Papa from "papaparse";
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-console.log(supabaseUrl);
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON;
-
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-const signInWithGoogle = async () => {
-  const { user, error } = await supabase.auth.signIn({
-    provider: "google",
-  });
-
-  if (error) {
-    console.log(error);
-  } else {
-    console.log(user);
-
-    // Get the user's session token
-    const session = supabase.auth.session();
-
-    // Include the session token in your API requests
-    const response = await fetch(supabaseUrl, {
-      headers: {
-        Authorization: `Bearer ${session.access_token}`,
-      },
-    });
-
-    // Handle the API response
-    const data = await response.json();
-    console.log(data);
-  }
-};
-
-const handleSignInWithGoogle = () => {
-  signInWithGoogle();
-};
 
 // Home page component
 const Home = () => {
@@ -105,7 +66,6 @@ const Home = () => {
   // Render the Home component
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 py-2">
-      <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
       <div
         className="bg-gray-800 text-white rounded p-5"
         style={{ maxWidth: "800px" }}

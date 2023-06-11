@@ -32,7 +32,13 @@ export default function App() {
   }, []);
 
   if (!session) {
-    return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
+    return (
+      <Auth
+        supabaseClient={supabase}
+        appearance={{ theme: ThemeSupa }}
+        redirectTo="/uploadCSV"
+      />
+    );
   } else {
     return <div>Logged in!</div>;
   }
