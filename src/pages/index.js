@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { useRouter } from "next/router";
 
 import dotenv from "dotenv";
 
@@ -16,6 +17,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function App() {
   const [session, setSession] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -32,14 +34,8 @@ export default function App() {
   }, []);
 
   if (!session) {
-    return (
-      <Auth
-        supabaseClient={supabase}
-        appearance={{ theme: ThemeSupa }}
-        redirectTo="/uploadCSV"
-      />
-    );
+    return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
   } else {
-    return <div>Logged in!</div>;
+    router.push("/uploadCSV");
   }
 }
