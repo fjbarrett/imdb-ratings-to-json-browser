@@ -4,6 +4,13 @@ import { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
 import Papa from "papaparse";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+console.log(supabaseUrl);
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON;
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
