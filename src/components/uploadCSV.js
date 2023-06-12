@@ -5,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 import Papa from "papaparse";
 
 // Home page component
-const uploadCSV = () => {
+const UploadCSV = () => {
   // State to store uploaded file
   const [file, setFile] = useState(null);
   // State to store converted json data
@@ -114,4 +114,4 @@ const uploadCSV = () => {
   );
 };
 
-export default uploadCSV;
+export default UploadCSV;
