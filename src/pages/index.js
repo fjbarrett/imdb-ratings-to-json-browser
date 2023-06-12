@@ -45,6 +45,7 @@ export default function App() {
         supabaseClient={supabase}
         appearance={{ theme: ThemeSupa }}
         providers={["google"]}
+        onlyThirdPartyProviders={true}
       />
     );
   } else {
