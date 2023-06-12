@@ -42,7 +42,9 @@ export default function App() {
   if (!session) {
     return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
   } else {
+    return (
     <button onClick={signOut}>Sign Out</button>;
-    return <UploadCSV />;
+     <UploadCSV />;
+    );
   }
 }
