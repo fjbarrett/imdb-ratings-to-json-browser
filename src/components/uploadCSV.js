@@ -2,14 +2,12 @@
 import { useState } from "react";
 // Import papaparse to parse csv file
 import { createClient } from "@supabase/supabase-js";
-import { Auth } from "@supabase/auth-ui-react";
 import Papa from "papaparse";
 
 // Home page component
-const Home = () => {
+const uploadCSV = () => {
   // State to store uploaded file
   const [file, setFile] = useState(null);
-  console.log(session);
   // State to store converted json data
   const [jsonData, setJsonData] = useState(null);
   // State to store copy success message
@@ -116,4 +114,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default uploadCSV;

@@ -4,6 +4,8 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useRouter } from "next/router";
 
+import uploadCSV from "@/components/uploadCSV";
+
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -36,6 +38,6 @@ export default function App() {
   if (!session) {
     return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
   } else {
-    router.push("/uploadCSV");
+    <uploadCSV />;
   }
 }
