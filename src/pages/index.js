@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { createClient } from "@supabase/supabase-js";
-import { Button } from "@supabase/ui";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useRouter } from "next/router";
@@ -43,7 +42,7 @@ export default function App() {
   if (!session) {
     return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
   } else {
-    <Button onClick={signOut}>Sign Out</Button>;
+    <button onClick={signOut}>Sign Out</button>;
     return <UploadCSV />;
   }
 }
