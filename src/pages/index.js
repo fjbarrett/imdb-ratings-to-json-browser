@@ -40,11 +40,22 @@ export default function App() {
   };
 
   if (!session) {
-    return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
+    return (
+      <Auth
+        supabaseClient={supabase}
+        appearance={{ theme: ThemeSupa }}
+        providers={["google"]}
+      />
+    );
   } else {
     return (
       <div>
-        <button onClick={signOut}>Sign Out</button>
+        <button
+          onClick={signOut}
+          className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        >
+          Sign Out
+        </button>
         <UploadCSV />
       </div>
     );
