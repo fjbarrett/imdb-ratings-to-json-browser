@@ -34,9 +34,15 @@ export default function App() {
     return () => subscription.unsubscribe();
   }, []);
 
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.log("Error logging out:", error.message);
+  };
+
   if (!session) {
     return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
   } else {
+    <Button onClick={signOut}>Sign Out</Button>;
     return <UploadCSV />;
   }
 }
