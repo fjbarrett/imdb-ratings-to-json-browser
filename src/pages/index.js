@@ -43,8 +43,10 @@ export default function App() {
     return <Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />;
   } else {
     return (
-    <button onClick={signOut}>Sign Out</button>;
-     <UploadCSV />;
+      <div>
+        <button onClick={signOut}>Sign Out</button>
+        <UploadCSV />
+      </div>
     );
   }
 }
