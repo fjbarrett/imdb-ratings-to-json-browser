@@ -41,12 +41,15 @@ export default function App() {
 
   if (!session) {
     return (
-      <Auth
-        supabaseClient={supabase}
-        appearance={{ theme: ThemeSupa }}
-        providers={["google"]}
-        onlyThirdPartyProviders={true}
-      />
+      <div>
+        <Auth
+          supabaseClient={supabase}
+          appearance={{ theme: ThemeSupa }}
+          providers={["google"]}
+          onlyThirdPartyProviders={true}
+        />
+        <UploadCSV />
+      </div>
     );
   } else {
     return (
