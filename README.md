@@ -8,6 +8,6 @@ The purpose of this tool is to create a consolidated list of user ratings and ma
 
 ## Live view
 
-Project is available to use online.
+Project is currently not available to use online.
 
-[imdb-ratings-to-json-browser.vercel.app](https://imdb-ratings-to-json-browser.vercel.app)
+<!-- [imdb-ratings-to-json-browser.vercel.app](https://imdb-ratings-to-json-browser.vercel.app) -->
