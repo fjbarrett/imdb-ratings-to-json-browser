@@ -69,7 +69,9 @@ const UploadCSV = () => {
         className="bg-gray-800 text-white rounded p-5"
         style={{ maxWidth: "800px" }}
       >
-        <h1 className="text-2xl font-bold mb-5">IMDb Ratings Converter</h1>
+        <h1 className="text-2xl font-bold mb-5">
+          IMDb Ratings CSV to JSON Converter
+        </h1>
 
         <form onSubmit={onFormSubmit} className="space-y-3">
           <label className="block text-sm font-medium">
