@@ -1,68 +1,116 @@
-import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useRouter } from "next/router";
+// Using React Hooks to manage state
+import { useState } from "react";
+// Import papaparse to parse csv file
+import Papa from "papaparse";
 
-import Header from "@/components/Header";
-import UploadCSV from "@/components/uploadCSV";
+// Home page component
+const Home = () => {
+  // State to store uploaded file
+  const [file, setFile] = useState(null);
+  // State to store converted json data
+  const [jsonData, setJsonData] = useState(null);
+  // State to store copy success message
+  const [copySuccess, setCopySuccess] = useState(false);
+  // State to store error message
+  const [errorMessage, setErrorMessage] = useState(null);
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL2;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON;
-
-console.log(supabaseUrl);
-console.log(supabaseKey);
-
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-export default function App() {
-  const [session, setSession] = useState(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) console.log("Error logging out:", error.message);
+  // Function to handle file upload event
+  const onFileChange = (event) => {
+    // Reset error message
+    setErrorMessage(null);
+    // Update the state on file change
+    setFile(event.target.files[0]);
   };
 
-  if (!session) {
-    return (
-      <div>
-        <Header />
-        <Auth
-          supabaseClient={supabase}
-          appearance={{ theme: ThemeSupa }}
-          providers={["google"]}
-          onlyThirdPartyProviders={true}
-        />
-        <UploadCSV />
+  // Function to handle form submission event
+  const onFormSubmit = (event) => {
+    event.preventDefault();
+    if (!file) return;
+
+    // Parse the CSV file using PapaParse library
+    Papa.parse(file, {
+      header: true,
+      complete: function (results) {
+        // Check if the CSV file contains the required columns
+        if (
+          !results.meta.fields.includes("Title") ||
+          !results.meta.fields.includes("Your Rating")
+        ) {
+          // Set error message if the required columns are missing
+          setErrorMessage(
+            "The uploaded CSV file is not from IMDb or is in an improper format. Please make sure the file contains 'Title' and 'Your Rating' columns."
+          );
+          return;
+        }
+
+        // Convert the parsed data to JSON format
+        const jsonArray = results.data.map((row) => ({
+          title: row.Title,
+          rating: row["Your Rating"],
+        }));
+
+        // Update the state with the converted JSON data
+        setJsonData(jsonArray);
+      },
+    });
+  };
+
+  // Function to copy the JSON data to clipboard
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(JSON.stringify(jsonData, null, 2));
+    setCopySuccess(true);
+  };
+
+  // Render the Home component
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-800 py-2">
+      <div
+        className="bg-gray-800 text-white rounded p-5"
+        style={{ maxWidth: "800px" }}
+      >
+        <h1 className="text-2xl font-bold mb-5">IMDb Ratings Converter</h1>
+
+        <form onSubmit={onFormSubmit} className="space-y-3">
+          <label className="block text-sm font-medium">
+            {/* Input field to upload CSV file */}
+            <input type="file" onChange={onFileChange} />
+          </label>
+
+          {/* Button to submit the form */}
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Convert
+          </button>
+        </form>
+
+        {/* Display error message if there is an error */}
+        {errorMessage && (
+          <div className="mt-5">
+            <h2 className="text-lg font-bold mb-3">Error:</h2>
+            <p>{errorMessage}</p>
+          </div>
+        )}
+
+        {/* Display the converted JSON data */}
+        {jsonData && (
+          <div className="mt-5 relative">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute top-0 right-0 mt-3 mr-3"
+              onClick={copyToClipboard}
+            >
+              {copySuccess ? "Copied!" : "Copy to Clipboard"}
+            </button>
+            <h2 className="text-lg font-bold mb-3">Converted Data:</h2>
+            <code className="bg-gray-900 text-white rounded p-5 block">
+              {JSON.stringify(jsonData, null, 2)}
+            </code>
+          </div>
+        )}
       </div>
-    );
-  } else {
-    return (
-      <div>
-        <Header signOut={this.signOut} />
-        <button
-          onClick={signOut}
-          className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-        >
-          Sign Out
-        </button>
-        <UploadCSV />
-      </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Home;
